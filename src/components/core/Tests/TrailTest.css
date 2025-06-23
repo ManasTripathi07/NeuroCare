@@ -1,0 +1,48 @@
+.trail-container {
+  display: grid;
+  grid-template-columns: repeat(4, 60px);
+  gap: 20px;
+  justify-content: center;
+  padding: 40px;
+}
+
+.trail-item {
+  width: 60px;
+  height: 60px;
+  background-color: #1a202c;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.trail-item.start {
+  background-color: gold;
+  font-weight: bold;
+}
+
+.trail-item.correct {
+  background-color: #22c55e;
+  color: white;
+}
+
+.trail-item.wrong {
+  background-color: #ef4444;
+  color: white;
+}
+
+.trail-item.next {
+  animation: blink 1s infinite;
+  border-color: #3b82f6;
+}
+
+@keyframes blink {
+  0% { background-color: #3b82f6; }
+  50% { background-color: #1a202c; }
+  100% { background-color: #3b82f6; }
+}

@@ -28,6 +28,7 @@ import CourseDetails from "./pages/CourseDetails"
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails"
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
+import TrailMakingTest from "./components/core/Tests/TrailMakingTest";
 
 function App() {
 
@@ -40,9 +41,11 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="catalog/:catalogName" element={<Catalog/>}/>
+        {/* <Route path="catalog/:catalogName" element={<Catalog/>}/> */}
+        <Route path="catalog/trail-test" element={<TrailMakingTest/>}/>
+        
         <Route path="courses/:courseId" element={<CourseDetails/>}/>
-
+    
         <Route
           path="signup"
           element={
