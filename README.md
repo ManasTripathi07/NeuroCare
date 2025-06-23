@@ -1,6 +1,5 @@
 # 🧠 NeuroCare – Cognitive Health Prescreening Platform
 
-
 NeuroCare is a full-featured web platform that empowers users to **prescreen cognitive impairments** through interactive assessments and educational content. Built on the **MERN stack** (MongoDB, Express.js, ReactJS, Node.js), it bridges the gap between medical awareness and accessible digital tools.
 
 ---
@@ -84,7 +83,6 @@ The platform uses **MongoDB** for storing structured and semi-structured health 
 - **Notification Schema** – For system alerts and health updates.
 
 ---
-
 
 
 ## 🔗 API Design
