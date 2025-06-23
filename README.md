@@ -86,11 +86,7 @@ The platform uses **MongoDB** for storing structured and semi-structured health 
 
 ---
 
-### 🗺️ Architecture Diagram
 
-![Architecture Diagram](https://github.com/user-attachments/assets/d7de8414-9729-4486-ad94-55ee4b1e1610)
-
----
 
 ## 🔗 API Design
 
