@@ -1,12 +1,5 @@
 # 🧠 NeuroCare – Cognitive Health Prescreening Platform
 
-<<<<<<< HEAD
-🔗 [Live Website](https://study-notion2-seven.vercel.app/) *(Demo Deployment)*
-=======
-# StudyNotion - EdTech Platform
-https://study-notionfinal-jwdzh413n-manastripathi07s-projects.vercel.app/ (Link to Website)
->>>>>>> d167040b55575e13478630896e10afcb085ee2d7
-
 NeuroCare is a full-featured web platform that empowers users to **prescreen cognitive impairments** through interactive assessments and educational content. Built on the **MERN stack** (MongoDB, Express.js, ReactJS, Node.js), it bridges the gap between medical awareness and accessible digital tools.
 
 ---
