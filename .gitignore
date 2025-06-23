@@ -1,0 +1,28 @@
+# Node modules (root and any subfolder)
+node_modules/
+
+# Ignore all .env files anywhere in the project
+**/.env
+**/.env.*  # includes .env.local, .env.production, etc.
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+.env
+
+# Optional: IDE/editor settings
+.vscode/
+.idea/
+*.sw?
+
+# Optional: build output
+dist/
+build/
