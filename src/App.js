@@ -29,6 +29,7 @@ import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails"
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import TrailMakingTest from "./components/core/Tests/TrailMakingTest";
+import TrailMakingTestB from "./components/core/Tests/TrailMakingTestB";
 
 function App() {
 
@@ -49,10 +50,10 @@ function App() {
           </PrivateRoute>}/>
         
         {/* Route for the trail test - b */}
-        {/* <Route path="catalog/trail-test---b" element={
+         <Route path="catalog/trail-test---b" element={
           <PrivateRoute>
-              <TrailMakingTest-b/>
-          </PrivateRoute>}/> */}
+             <TrailMakingTestB/>
+          </PrivateRoute>}/> 
 
           
         {/* Ace Test Route Needs to be added here */}
