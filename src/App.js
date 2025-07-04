@@ -42,8 +42,20 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         {/* <Route path="catalog/:catalogName" element={<Catalog/>}/> */}
-        <Route path="catalog/trail-test" element={<TrailMakingTest/>}/>
+
+        <Route path="catalog/trail-test---a" element={
+          <PrivateRoute>
+              <TrailMakingTest/>
+          </PrivateRoute>}/>
         
+        {/* Route for the trail test - b */}
+        {/* <Route path="catalog/trail-test---b" element={
+          <PrivateRoute>
+              <TrailMakingTest-b/>
+          </PrivateRoute>}/> */}
+
+          
+        {/* Ace Test Route Needs to be added here */}
         <Route path="courses/:courseId" element={<CourseDetails/>}/>
     
         <Route

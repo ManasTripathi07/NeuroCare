@@ -289,3 +289,46 @@ exports.instructorDashboard = async (req, res) => {
 
 
 
+//Trail Test Integrations
+
+
+exports.submitTrailTestTime = async (req, res) => {
+  const { userId, timeTaken } = req.body;
+
+  if (!userId || !timeTaken) {
+    return res.status(400).json({ message: "userId and timeTaken are required" });
+  }
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Add new time to start of array, keep last 5
+    user.trailTestTimings.unshift(parseFloat(timeTaken));
+    user.trailTestTimings = user.trailTestTimings.slice(0, 5);
+    await user.save();
+
+    res.status(200).json({ message: "Time recorded", timings: user.trailTestTimings });
+  } catch (error) {
+    console.error("Submit trail test error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// GET: Fetch last 5 trail test times
+exports.getTrailTestHistory = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId).select("trailTestTimings");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json({ timings: user.trailTestTimings });
+  } catch (error) {
+    console.error("Get trail test history error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+

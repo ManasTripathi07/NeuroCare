@@ -61,6 +61,13 @@ const userSchema = new mongoose.Schema({
             ref: "courseProgress",
         },
     ],
+
+    trailTestTimings: {
+    type: [Number], // Array of last test timings in seconds
+    default: [],
+    },
+
+    
 },
 { timestamps: true }
 );

@@ -70,3 +70,10 @@ export const settingsEndpoints = {
   CHANGE_PASSWORD_API: BASE_URL + "/auth/changepassword",
   DELETE_PROFILE_API: BASE_URL + "/profile/deleteProfile",
 }
+
+
+// TRAIL TEST ENDPOINTS
+export const trailTestEndpoints = {
+  SUBMIT_TRAIL_TEST_API: BASE_URL + "/trail-test/submit",
+  GET_TRAIL_HISTORY_API: (userId) => BASE_URL + `/trail-test/history/${userId}`,
+};

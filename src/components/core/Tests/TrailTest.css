@@ -1,4 +1,4 @@
-.trail-container {
+/* .trail-container {
   display: grid;
   grid-template-columns: repeat(4, 60px);
   gap: 20px;
@@ -45,4 +45,96 @@
   0% { background-color: #3b82f6; }
   50% { background-color: #1a202c; }
   100% { background-color: #3b82f6; }
+} */
+
+
+
+.trail-container-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* background: #0e0e0e; */
 }
+
+.trail-container-relative {
+  position: relative;
+  width: 80vw;
+  height: 88vh;
+  max-width: 900px;
+  max-height: 700px;
+  border: 4px solid #6ee7b7;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.3);
+}
+
+/* Responsive fallback */
+@media (max-width: 768px) {
+  .trail-container-relative {
+    width: 95vw;
+    height: 75vh;
+  }
+}
+
+.trail-item {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.trail-item.correct {
+  background-color: #4ade80;
+  color: white;
+}
+
+.trail-item.wrong {
+  background-color: #f87171;
+  color: white;
+}
+
+.trail-item.next {
+  animation: blinkBlue 0.5s alternate infinite;
+}
+
+@keyframes blinkBlue {
+  from {
+    background-color: #3b82f6;
+    color: white;
+  }
+  to {
+    background-color: #1e3a8a;
+    color: white;
+  }
+}
+
+
+
+.trail-wrapper-flex {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 2rem;
+}
+
+.leaderboard-container {
+  background: linear-gradient(to bottom right, #1e293b, #0f172a);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  width: 250px;
+  min-height: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+
