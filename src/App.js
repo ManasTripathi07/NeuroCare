@@ -30,6 +30,7 @@ import VideoDetails from "./components/core/ViewCourse/VideoDetails"
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import TrailMakingTest from "./components/core/Tests/TrailMakingTest";
 import TrailMakingTestB from "./components/core/Tests/TrailMakingTestB";
+import EmotionRecognitionTest from "./components/core/Tests/EmotionRecognitionTest";
 
 function App() {
 
@@ -53,6 +54,12 @@ function App() {
          <Route path="catalog/trail-test---b" element={
           <PrivateRoute>
              <TrailMakingTestB/>
+          </PrivateRoute>}/> 
+
+         {/* Route for the emotion recognition test*/}
+          <Route path="catalog/emotion-test" element={
+          <PrivateRoute>
+             <EmotionRecognitionTest/>
           </PrivateRoute>}/> 
 
           
