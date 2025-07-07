@@ -31,6 +31,7 @@ import Instructor from "./components/core/Dashboard/InstructorDashboard/Instruct
 import TrailMakingTest from "./components/core/Tests/TrailMakingTest";
 import TrailMakingTestB from "./components/core/Tests/TrailMakingTestB";
 import EmotionRecognitionTest from "./components/core/Tests/EmotionRecognitionTest";
+import AceTest from "./components/core/Tests/AceTest";
 
 function App() {
 
@@ -64,7 +65,10 @@ function App() {
 
           
         {/* Ace Test Route Needs to be added here */}
-        <Route path="courses/:courseId" element={<CourseDetails/>}/>
+         <Route path="catalog/ace-test" element={
+          <PrivateRoute>
+             <AceTest/>
+          </PrivateRoute>}/> 
     
         <Route
           path="signup"
