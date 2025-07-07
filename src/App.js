@@ -32,6 +32,7 @@ import TrailMakingTest from "./components/core/Tests/TrailMakingTest";
 import TrailMakingTestB from "./components/core/Tests/TrailMakingTestB";
 import EmotionRecognitionTest from "./components/core/Tests/EmotionRecognitionTest";
 import AceTest from "./components/core/Tests/AceTest";
+import PulseTrackerGame from "./components/core/Tests/PulseTrackerTest";
 
 function App() {
 
@@ -61,6 +62,11 @@ function App() {
           <Route path="catalog/emotion-test" element={
           <PrivateRoute>
              <EmotionRecognitionTest/>
+          </PrivateRoute>}/> 
+
+          <Route path="catalog/pulse-test" element={
+          <PrivateRoute>
+             <PulseTrackerGame/>
           </PrivateRoute>}/> 
 
           
