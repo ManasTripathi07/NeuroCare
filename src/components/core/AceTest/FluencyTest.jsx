@@ -11,10 +11,11 @@ const FluencyTest = ({ onNext }) => {
   const [spokenWords, setSpokenWords] = useState([]);
   const [timer, setTimer] = useState(durationInSeconds);
   const [done, setDone] = useState(false);
+
   const intervalRef = useRef(null);
   const recognitionRef = useRef(null);
-
   const validWords = useRef(new Set());
+  const hasAddedResult = useRef(false); // ✅ Prevent duplicate result submission
 
   useEffect(() => {
     if (!window.SpeechRecognition && !window.webkitSpeechRecognition) return;
@@ -43,9 +44,10 @@ const FluencyTest = ({ onNext }) => {
     validWords.current.clear();
     setSpokenWords([]);
     setDone(false);
+    hasAddedResult.current = false; // ✅ Reset result tracking
+
     setTimer(durationInSeconds);
     setListening(true);
-
     recognitionRef.current.start();
 
     intervalRef.current = setInterval(() => {
@@ -63,13 +65,19 @@ const FluencyTest = ({ onNext }) => {
   const stopTest = () => {
     recognitionRef.current?.stop();
     setListening(false);
-    setDone(true);
-    const score = spokenWords.length;
-    addResult("Fluency", score, {
-      letter,
-      words: spokenWords,
-    });
+    setDone(true); // ✅ `addResult` will now be triggered by useEffect
   };
+
+  useEffect(() => {
+    if (done && !hasAddedResult.current) {
+      const score = spokenWords.length;
+      addResult("Fluency", score, {
+        letter,
+        words: spokenWords,
+      });
+      hasAddedResult.current = true; // ✅ Ensure result is added only once
+    }
+  }, [done, spokenWords, addResult]);
 
   return (
     <motion.div

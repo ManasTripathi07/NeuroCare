@@ -96,13 +96,12 @@ const VisuospatialTest = ({ onNext }) => {
 
       {/* C. Pentagon Matching */}
       <section>
-        <h3 className="text-xl font-semibold text-caribbeangreen-800 mt-6 mb-1">C. Intersecting Pentagons (5 pts)</h3>
-        <p className="text-richblack-600">Which image shows two intersecting pentagons correctly?</p>
+        <h3 className="text-xl font-semibold text-caribbeangreen-800 mt-6 mb-1">C. Recognize the Shape (5 pts)</h3>
+        <p className="text-richblack-600">Which image correctly shows a pentagon?</p>
         <div className="flex gap-6 mt-4 flex-wrap justify-center">
           <label className="flex flex-col items-center gap-2">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/ACE-R_pentagons_correct.jpg/220px-ACE-R_pentagons_correct.jpg"
-              alt="Correct pentagons"
+               src="https://www.mathsisfun.com/geometry/images/pentagon-regular-hdr.png"
               className="w-32 h-32 border-2 border-richblack-100 rounded-xl"
             />
             <input
@@ -115,7 +114,7 @@ const VisuospatialTest = ({ onNext }) => {
 
           <label className="flex flex-col items-center gap-2">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/ACE-R_pentagons_incorrect.jpg/220px-ACE-R_pentagons_incorrect.jpg"
+              src="https://uploads-us-west-2.insided.com/figma-en/attachment/305d7f0bf372509c08222b6c7636550d7da789d0.png"
               alt="Incorrect pentagons"
               className="w-32 h-32 border-2 border-richblack-100 rounded-xl"
             />
