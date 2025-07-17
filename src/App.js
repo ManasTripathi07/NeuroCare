@@ -33,6 +33,7 @@ import TrailMakingTestB from "./components/core/Tests/TrailMakingTestB";
 import EmotionRecognitionTest from "./components/core/Tests/EmotionRecognitionTest";
 import AceTest from "./components/core/Tests/AceTest";
 import PulseTrackerGame from "./components/core/Tests/PulseTrackerTest";
+import TrailTestSelectionPage from "./pages/TrailTestSelectionPage";
 
 function App() {
 
@@ -47,16 +48,25 @@ function App() {
         <Route path="/" element={<Home/>}/>
         {/* <Route path="catalog/:catalogName" element={<Catalog/>}/> */}
 
-        <Route path="catalog/trail-test---a" element={
+        <Route path="catalog/trail-test" element={
           <PrivateRoute>
-              <TrailMakingTest/>
+              {/* <TrailMakingTest/> */}
+              <TrailTestSelectionPage/>
           </PrivateRoute>}/>
+
+         <Route path="test-a" element={
+            <PrivateRoute>
+              <TrailMakingTest/>
+            </PrivateRoute>   
+          }/>
+
+          <Route path="test-b" element={
+            <PrivateRoute>
+              <TrailMakingTestB/>
+            </PrivateRoute>   
+          }/>
         
-        {/* Route for the trail test - b */}
-         <Route path="catalog/trail-test---b" element={
-          <PrivateRoute>
-             <TrailMakingTestB/>
-          </PrivateRoute>}/> 
+        
 
          {/* Route for the emotion recognition test*/}
           <Route path="catalog/emotion-test" element={
