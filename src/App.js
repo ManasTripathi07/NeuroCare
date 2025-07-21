@@ -61,7 +61,7 @@ function App() {
          {/* Route for the emotion recognition test*/}
           <Route path="catalog/emotion-test" element={
           <PrivateRoute>
-             <EmotionRecognitionTest/>
+              <EmotionRecognitionTest/>
           </PrivateRoute>}/> 
 
           <Route path="catalog/pulse-test" element={

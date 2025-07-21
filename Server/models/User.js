@@ -61,6 +61,12 @@ const userSchema = new mongoose.Schema({
             ref: "courseProgress",
         },
     ],
+    result : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Result"
+        }
+    ],
 
     trailTestTimings: {
     type: [Number], // Array of last test timings in seconds

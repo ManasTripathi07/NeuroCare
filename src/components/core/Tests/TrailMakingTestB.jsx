@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { AiOutlineStop } from "react-icons/ai";
+import { captureResult } from "../../../services/operations/resultAPI"
 
 const TrailMakingTestB = () => {
+
+  const user = JSON.parse(localStorage.getItem("user"))
+  const userId = user?._id
+
   const [points, setPoints] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startTime, setStartTime] = useState(null);
@@ -88,6 +93,28 @@ const TrailMakingTestB = () => {
   useEffect(() => {
     return () => clearInterval(intervalRef.current);
   }, []);
+
+  useEffect( () => {
+  if (endTime && startTime && userId) {
+    const totalTime = ((endTime - startTime) / 1000).toFixed(2)
+
+    const resultPayload = {
+      category: "Trail Test B", // or use category ObjectId if required
+      user: userId,
+      mistakes: mistakes,
+      timeTaken: Number(totalTime),
+    }
+
+     captureResult(resultPayload)
+      .then(() => {
+        console.log("Result captured successfully for Trail Test B")
+      })
+      .catch((err) => {
+        console.error("Failed to capture result for Trail Test B", err)
+      })
+  }
+}, [endTime])
+
 
   const handleClick = (index) => {
     if (index !== getExpectedIndex()) {

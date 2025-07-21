@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { AiOutlineStop } from "react-icons/ai";
+import { captureResult } from "../../../services/operations/resultAPI";
+
 
 const PulseTrackerTest = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
   const [circle, setCircle] = useState(null);
   const [score, setScore] = useState(0);
   const [penalty, setPenalty] = useState(0);
@@ -62,6 +66,16 @@ const PulseTrackerTest = () => {
   };
 
   const stopTest = () => {
+
+    const result = {
+      category : "Pulse Test",
+      user : userId,
+      score : score,
+      mistakes : penalty,
+      timeTaken : timer,
+    }
+
+    captureResult(result);
     setHasStarted(false);
     setCircle(null);
     clearInterval(intervalRef.current);

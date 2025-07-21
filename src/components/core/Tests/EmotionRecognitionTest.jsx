@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { RotateCcw } from "lucide-react";
+import { captureResult } from "../../../services/operations/resultAPI";
 
 const emotions = [
   "Happiness",
@@ -25,27 +26,53 @@ const shuffleArray = (array) => {
 };
 
 const EmotionRecognitionTest = () => {
+
+  const user = JSON.parse(localStorage.getItem("user"))
+  const userId = user?._id
+
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [started, setStarted] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
+  // Timer for elapsed seconds (shown in UI)
+  useEffect(() => {
+    let timerId;
+    if (started && !showResult) {
+      timerId = setInterval(() => {
+        setElapsedTime((prev) => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(timerId);
+  }, [started, showResult]);
+
+  // Step logic per question
   useEffect(() => {
     if (!started || showResult) return;
 
     const timer = setTimeout(() => {
-      if (current < images.length) {
-        if (selected === images[current].emotion) {
-          setScore((s) => s + 1);
-        }
-        if (current < images.length - 1) {
-          setCurrent((c) => c + 1);
-          setSelected(null);
-        } else {
-          setShowResult(true);
-        }
+      if (selected === images[current].emotion) {
+        setScore((s) => s + 1);
+      }
+
+      if (current < images.length - 1) {
+        setCurrent((c) => c + 1);
+        setSelected(null);
+      } else {
+        setShowResult(true);
+
+        // ✅ Capture result via API
+        const resultData = {
+          category: "Emotion Test",
+          user : userId,
+          score: score + (selected === images[current].emotion ? 1 : 0),
+          mistakes: images.length - score - (selected === images[current].emotion ? 1 : 0) ,
+          timeTaken: elapsedTime + 3 // add buffer
+        };
+        captureResult(resultData);
       }
     }, 3000);
 
@@ -62,6 +89,7 @@ const EmotionRecognitionTest = () => {
     setSelected(null);
     setScore(0);
     setShowResult(false);
+    setElapsedTime(0);
     setStarted(true);
   };
 
@@ -72,6 +100,7 @@ const EmotionRecognitionTest = () => {
     setCurrent(0);
     setSelected(null);
     setScore(0);
+    setElapsedTime(0);
   };
 
   const handleReset = () => {
@@ -83,17 +112,23 @@ const EmotionRecognitionTest = () => {
       {!started && !showResult && (
         <div className="flex items-center flex-col gap-4">
           <p className="text-[45px] text-yellow-50 text-center font-bold">Emotion Recognition Test</p>
-        <button
-          onClick={handleStart}
-          className="px-6 py-3 mb-6 text-lg bg-yellow-50 text-richblack-800 rounded-lg font-semibold shadow hover:bg-yellow-100 transition"
-        >
-          Start Test
-        </button>
+          <button
+            onClick={handleStart}
+            className="px-6 py-3 mb-6 text-lg bg-yellow-50 text-richblack-800 rounded-lg font-semibold shadow hover:bg-yellow-100 transition"
+          >
+            Start Test
+          </button>
         </div>
       )}
 
       {started && !showResult && images.length > 0 && (
         <div className="w-full max-w-2xl p-6 rounded-2xl shadow-lg bg-richblack-700 space-y-6">
+          {/* Timer Display */}
+          <div className="text-center text-sm text-yellow-50 font-mono">
+            Time: {elapsedTime}s
+          </div>
+
+          {/* Emotion Image */}
           <motion.img
             key={images[current].src}
             src={images[current].src}
@@ -104,6 +139,7 @@ const EmotionRecognitionTest = () => {
             transition={{ duration: 0.5 }}
           />
 
+          {/* Emotion Buttons */}
           <div className="grid grid-cols-2 gap-4">
             {emotions.map((emo) => (
               <button
@@ -121,10 +157,12 @@ const EmotionRecognitionTest = () => {
             ))}
           </div>
 
+          {/* Selected Info */}
           <div className="text-xs text-pure-greys-50 text-center">
             {selected ? `You selected: ${selected}` : "Select the emotion shown above"}
           </div>
 
+          {/* Stop Button */}
           <div className="flex justify-center mt-4">
             <button
               onClick={handleStop}
@@ -136,6 +174,7 @@ const EmotionRecognitionTest = () => {
         </div>
       )}
 
+      {/* Final Result */}
       {showResult && (
         <motion.div
           className="text-center bg-richblack-700 p-8 rounded-2xl shadow-xl space-y-4"
@@ -145,7 +184,7 @@ const EmotionRecognitionTest = () => {
         >
           <h2 className="text-2xl font-bold text-caribbeangreen-100">Test Completed!</h2>
           <p className="text-lg">You got {score} out of {images.length} correct</p>
-          <p className="text-sm text-richblue-100">Great job recognizing emotions!</p>
+          <p className="text-sm text-richblue-100">Time Taken: {elapsedTime}s</p>
           <button
             onClick={handleReset}
             className="mt-4 px-6 py-2 bg-caribbeangreen-100 text-richblack-900 rounded-xl font-bold hover:bg-caribbeangreen-200 transition"

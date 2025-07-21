@@ -58,6 +58,10 @@ export const categories = {
 export const catalogData = {
   CATALOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails",
 }
+
+export const storeResultEndPoint = {
+  RESULTDATA_API : BASE_URL + "/course/result",
+}
 // CONTACT-US API
 export const contactusEndpoint = {
   CONTACT_US_API: BASE_URL + "/reach/contact",

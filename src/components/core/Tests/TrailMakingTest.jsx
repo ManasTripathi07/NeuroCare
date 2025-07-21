@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import "./TrailTest.css"
 import { getTrailTestHistory, submitTrailTestTime } from "../../../services/operations/trailTestApi"
 
+
 const TrailTest = () => {
   const originalSequence = [1, 2, 3, 4, 5, 6, 7, 8]
   const [trailSequence, setTrailSequence] = useState([])
