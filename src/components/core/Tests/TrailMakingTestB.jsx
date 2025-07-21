@@ -178,7 +178,7 @@ const TrailMakingTestB = () => {
       {/* Header + Start Button */}
       <div className="w-full max-w-[900px] flex flex-col items-center">
         <h1 className="text-yellow-50 text-4xl font-bold mb-6 font-edu-sa text-center">
-          Trail Making Test B
+          Trail Test B
         </h1>
 
         {!hasStarted && (
