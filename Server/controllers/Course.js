@@ -7,6 +7,7 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const CourseProgress = require("../models/CourseProgress")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
 
+
 // Function to create a new course
 exports.createCourse = async (req, res) => {
   try {
@@ -134,6 +135,8 @@ exports.createCourse = async (req, res) => {
     })
   }
 }
+
+
 // Edit Course Details
 exports.editCourse = async (req, res) => {
   try {

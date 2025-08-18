@@ -13,6 +13,10 @@ const categorySchema = new mongoose.Schema({
 			ref: "Course",
 		},
 	],
+	subcategory : [{
+		type : mongoose.Schema.Types.ObjectId,
+		ref : "Subcategory",
+	}]
 });
 
 // Export the Tags model

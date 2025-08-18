@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import "./TrailTest.css"
 import { getTrailTestHistory, submitTrailTestTime } from "../../../services/operations/trailTestApi"
-
+import { captureResult } from "../../../services/operations/resultAPI"
 
 const TrailTest = () => {
   const originalSequence = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -15,6 +15,7 @@ const TrailTest = () => {
   const [showStartScreen, setShowStartScreen] = useState(true)
   const [finalTime, setFinalTime] = useState(null)
   const [timer, setTimer] = useState(0)
+  const [mistakeCount, setMistakeCount] = useState(0)
 
   const containerRef = useRef(null)
   const timerRef = useRef(null)
@@ -78,6 +79,7 @@ const TrailTest = () => {
     setStartTime(Date.now())
     setFinalTime(null)
     setTimer(0)
+    setMistakeCount(0)
     setShowStartScreen(false)
 
     initializePositions()
@@ -96,6 +98,7 @@ const TrailTest = () => {
     setStartTime(Date.now())
     setFinalTime(null)
     setTimer(0)
+    setMistakeCount(0)
     setShowStartScreen(false)
 
     clearInterval(timerRef.current)
@@ -113,6 +116,7 @@ const TrailTest = () => {
       setBlinkIndex(null)
     } else {
       setErrorIndex(idx)
+      setMistakeCount((prev) => prev + 1)
       setTimeout(() => {
         setErrorIndex(null)
         setBlinkIndex(originalSequence[currentIndex])
@@ -139,15 +143,41 @@ const TrailTest = () => {
   }, [currentIndex])
 
   useEffect(() => {
-    return () => clearInterval(timerRef.current)
-  }, [])
+    if (
+      currentIndex === originalSequence.length &&
+      originalSequence.length > 0
+    ) {
+      const endTime = Date.now()
+      const totalTime = ((endTime - startTime) / 1000).toFixed(2)
+      setFinalTime(totalTime)
+      clearInterval(timerRef.current)
+
+      if (userId) {
+        const result = {
+          category: "Trail Test",
+          subcategory : "Trail Test A",
+          user: userId,
+          score: 8,
+          mistakes: mistakeCount,
+          timeTaken: totalTime,
+        }
+
+        captureResult(result)
+      }
+    }
+  }, [currentIndex])
 
   return (
     <div className="w-full min-h-screen bg-[#1A1A2E] flex flex-col items-center justify-start py-10 font-inter px-4">
-      {/* Timer and Reset */}
+      {/* Timer and Mistakes */}
       {!showStartScreen && finalTime === null && (
         <div className="flex justify-between items-center w-full max-w-[900px] mb-4 px-2 text-lg">
-          <div className="text-caribbeangreen-100 font-semibold">Time: {timer}s</div>
+          <div className="text-caribbeangreen-100 font-semibold">
+            Time: {timer}s
+          </div>
+          <div className="text-pink-200 font-semibold">
+            Mistakes: {mistakeCount}
+          </div>
           <button
             onClick={resetTest}
             className="px-4 py-2 bg-yellow-50 text-richblack-800 rounded-md font-semibold shadow hover:bg-yellow-100 transition-all"
@@ -157,10 +187,12 @@ const TrailTest = () => {
         </div>
       )}
 
-      {/* Start Test Screen */}
+      {/* Start Screen */}
       {showStartScreen && (
-        <div className="flex flex-col items-center  justify-center mt-[227px]">
-          <h1 className="text-yellow-50 text-4xl font-bold mb-6">Trail Test A</h1>
+        <div className="flex flex-col items-center justify-center mt-[227px]">
+          <h1 className="text-yellow-50 text-4xl font-bold mb-6">
+            Trail Test A
+          </h1>
           <button
             onClick={startTest}
             className="px-6 py-3 text-xl bg-yellow-50 text-richblack-800 rounded-lg font-semibold shadow hover:bg-yellow-100 transition-all"
@@ -177,6 +209,9 @@ const TrailTest = () => {
           <p className="text-xl text-caribbeangreen-100 font-semibold">
             Time Taken: {finalTime}s
           </p>
+          <p className="text-xl text-pink-200 font-semibold">
+            Mistakes: {mistakeCount}
+          </p>
           <button
             onClick={resetTest}
             className="mt-2 px-6 py-3 text-lg bg-yellow-50 text-richblack-800 rounded-lg font-semibold shadow hover:bg-yellow-100 transition-all"
@@ -186,7 +221,7 @@ const TrailTest = () => {
         </div>
       )}
 
-      {/* Game Window */}
+      {/* Game Box */}
       {!showStartScreen && finalTime === null && (
         <div
           ref={containerRef}

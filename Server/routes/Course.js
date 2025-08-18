@@ -24,6 +24,10 @@ const {
 } = require("../controllers/Category")
 
 const {
+  createSubcategory
+} = require("../controllers/Subcategory");
+
+const {
   storeResult
 } = require("../controllers/Result");
 
@@ -97,7 +101,8 @@ router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 router.post("/createCategory", auth, isAdmin, createCategory)
 router.get("/showAllCategories", showAllCategories)
 router.post("/getCategoryPageDetails", categoryPageDetails)
-router.post("/result" ,   storeResult);
+router.post("/createSubcategory" , createSubcategory)
+router.post("/result" ,   storeResult)
 
 // ********************************************************************************************************
 //                                      Rating and Review

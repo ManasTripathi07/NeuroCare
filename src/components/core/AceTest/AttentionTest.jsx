@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { captureResult } from "../../../services/operations/resultAPI";
 import { useTest } from "../.././../context/TestContext";
-
 
 const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 const questions = [
@@ -9,73 +9,92 @@ const questions = [
   { id: "month", question: "What month is it?", answer: new Date().toLocaleString('default', { month: 'long' }).toLowerCase(), score: 1 },
   { id: "year", question: "What year is it?", answer: new Date().getFullYear().toString(), score: 1 },
   { id: "place", question: "What place are you in?", answer: "hospital", score: 1 },
-  { id: "city", question: "What city are you in?", answer: "jaipur", score: 1 }, // customize
+  { id: "city", question: "What city are you in?", answer: "jaipur", score: 1 },
 ];
-
-
 
 const serial7s = [100, 93, 86, 79, 72, 65];
 const digitSpanAnswer = "2574";
 
+
+
 const AttentionTest = ({ onNext }) => {
+
+  const userId = JSON.parse(localStorage.getItem("user"))._id;
+
   const { addResult } = useTest();
   const [answers, setAnswers] = useState({});
   const [serialInput, setSerialInput] = useState("");
   const [digitInput, setDigitInput] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
+  const [startTime, setStartTime] = useState(null);
+
+  useEffect(() => {
+    setStartTime(Date.now());
+  }, []);
 
   const handleChange = (id, value) => {
     setAnswers({ ...answers, [id]: value });
   };
 
   const handleSubmit = () => {
+    const endTime = Date.now();
+    const timeTaken = Math.floor((endTime - startTime) / 1000); // seconds
     let total = 0;
+    let mistakes = 0;
 
     // Orientation scoring
     questions.forEach(({ id, answer, score }) => {
       const userAnswer = (answers[id] || "").toLowerCase().trim();
-      const correct = typeof answer === "function" ? answer() : answer.toString().toLowerCase();
-      if (userAnswer === correct) total += score;
-      else console.log("wrong answer" ,answer);
+      const correct = answer.toString().toLowerCase();
+      if (userAnswer === correct) {
+        total += score;
+      } else {
+        mistakes += 1;
+      }
     });
-    console.log("score adter 1" , total);
 
     // Serial 7s scoring
-    console.log("Serial INput", serialInput);
     const serialParts = serialInput.split(" ");
-    console.log("serial Parts" , serialParts);
     let serialScore = 0;
     for (let i = 0; i < Math.min(serialParts.length, serial7s.length); i++) {
-      if (serialParts[i] === serial7s[i].toString()) serialScore++;
-       else console.log("wrong answer" ,serialParts[i]);
+      if (serialParts[i] === serial7s[i].toString()) {
+        serialScore++;
+      } else {
+        mistakes += 1;
+      }
     }
     total += serialScore;
-
-    console.log("score adter 2" , total);
 
     // Digit span backward scoring
     if (digitInput.trim() === digitSpanAnswer) {
       total += 3;
+    } else {
+      mistakes += 1;
     }
-    console.log("score adter 3" , total);
 
     setScore(total);
-    console.log("score adter 4" , score);
+
+    // Add to test context
     addResult("Attention", total, {
       orientationAnswers: answers,
       serial7s: serialInput,
       digitSpan: digitInput,
     });
+
+    // Capture result
+    const result = {
+      score : total,
+      mistakes,
+      timeTaken,
+      user : userId,
+      category : "Ace Test",
+      subcategory : "Attention Test"
+    }
+    captureResult(result);
+
     setSubmitted(true);
   };
-
-  useEffect(()=> {
-  console.log(new Date().getDay().toString());
-   console.log(new Date().getMonth().toString());
-    console.log(new Date().getFullYear().toString());
-
-},[])
 
   return (
     <motion.div
@@ -108,11 +127,7 @@ const AttentionTest = ({ onNext }) => {
         <input
           type="text"
           value={serialInput}
-         onChange={(e) => {
-  console.log(e.target.value);
-  setSerialInput(e.target.value);
-  console.log("searil input" , serialInput); // <-- this is required
-}}
+          onChange={(e) => setSerialInput(e.target.value)}
           className="w-full px-4 py-2 border border-richblack-100 rounded-lg"
           placeholder="Enter space-separated numbers"
           disabled={submitted}

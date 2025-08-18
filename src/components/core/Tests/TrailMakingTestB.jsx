@@ -99,7 +99,8 @@ const TrailMakingTestB = () => {
     const totalTime = ((endTime - startTime) / 1000).toFixed(2)
 
     const resultPayload = {
-      category: "Trail Test B", // or use category ObjectId if required
+      category: "Trail Test", // or use category ObjectId if required
+      subcategory : "Trail Test B",
       user: userId,
       mistakes: mistakes,
       timeTaken: Number(totalTime),

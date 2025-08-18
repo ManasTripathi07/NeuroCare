@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTest } from "../.././../context/TestContext";
+import { captureResult } from "../../../services/operations/resultAPI";
 
 const targetWords = ["lemon", "key", "ball", "spoon", "book"];
 const recognition =
@@ -9,12 +10,14 @@ const recognition =
     : null;
 
 const MemoryTest = ({ onNext }) => {
+    const userId = JSON.parse(localStorage.getItem("user"))._id;
   const { addResult } = useTest();
   const [stage, setStage] = useState("presentation");
   const [spokenWords, setSpokenWords] = useState([]);
   const [listening, setListening] = useState(false);
   const [score, setScore] = useState(0);
   const capturedWords = useRef([]);
+  const [startTime, setStartTime] = useState(null);
 
   useEffect(() => {
     if (!recognition) return;
@@ -40,8 +43,13 @@ const MemoryTest = ({ onNext }) => {
   };
 
   const handleRecall = () => {
+    const endTime = Date.now();
+    const timeTaken = Math.floor((endTime - startTime) / 1000); // seconds
+
     const matched = targetWords.filter((word) => spokenWords.includes(word));
     const points = matched.length;
+    const mistakes = 5 - matched.length;
+
     setScore(points);
     setStage("done");
 
@@ -49,6 +57,22 @@ const MemoryTest = ({ onNext }) => {
       spokenWords,
       correctWords: targetWords,
     });
+
+    const result ={
+      score: points,
+      mistakes,
+      timeTaken,
+      user : userId,
+      category : "Ace Test",
+      subcategory : "Memory Test"
+    }
+
+    captureResult(result);
+  };
+
+  const handleStartRecall = () => {
+    setStartTime(Date.now());
+    setStage("recall");
   };
 
   return (
@@ -72,7 +96,7 @@ const MemoryTest = ({ onNext }) => {
           </ul>
           <button
             className="mt-6 bg-yellow-500 text-white px-6 py-2 rounded-xl hover:bg-yellow-600 transition"
-            onClick={() => setStage("recall")}
+            onClick={handleStartRecall}
           >
             I’m Ready to Recall
           </button>

@@ -14,9 +14,9 @@ const ACEIIIFlow = () => {
   const [started, setStarted] = useState(false);
 
   const steps = [
-    // <AttentionTest onNext={() => setStep(step + 1)} />,
-    // <MemoryTest onNext={() => setStep(step + 1)} />,
-    // <FluencyTest onNext={() => setStep(step + 1)} />,
+    <AttentionTest onNext={() => setStep(step + 1)} />,
+     <MemoryTest onNext={() => setStep(step + 1)} />,
+    <FluencyTest onNext={() => setStep(step + 1)} />,
     // <LanguageTest onNext={() => setStep(step + 1)} />,
     <VisuospatialTest onNext={() => setStep(step + 1)} />,
     <FinalReport
