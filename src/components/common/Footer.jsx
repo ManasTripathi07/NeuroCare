@@ -330,7 +330,8 @@ const Footer = () => {
             ))}
           </div>
           <div className="text-center">
-            © 2025 NeuroCare  · Designed with ❤️ by Manas Tripathi , Meet Dipak Agrawal
+            © 2025 NeuroCare  · Designed with ❤️ by <a className="text-caribbeangreen-100" href="https://www.linkedin.com/in/manas-tripathi-73876324b/">Manas Tripathi </a> &
+            <a className="text-caribbeangreen-100"  href="https://www.linkedin.com/in/meet-agrawal-bb5350292/"> Meet Dipak Agrawal</a> 
           </div>
         </div>
       </div>
